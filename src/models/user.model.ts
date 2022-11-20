@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from 'config';
+import logger from '../utils/logger';
 
 export interface UserDocument extends mongoose.Document {
   email: string;
@@ -35,7 +36,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', async function (next) {
   let user = this as UserDocument;
 
-  if (user.isModified('password')) {
+  if (!user.isModified('password')) {
     return next();
   }
 
@@ -58,6 +59,6 @@ userSchema.methods.comparePassword = async function (
     .catch((_: any) => false);
 };
 
-const UserModel = mongoose.model('User', userSchema);
+const UserModel = mongoose.model<UserDocument>('User', userSchema);
 
 export default UserModel;
