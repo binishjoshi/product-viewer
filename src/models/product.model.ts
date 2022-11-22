@@ -5,6 +5,7 @@ import { UserDocument } from './user.model';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvxyz0123456789', 10);
 
 export interface ProductDocument extends mongoose.Document {
+  productId: string;
   user: UserDocument['_id'];
   title: string;
   description: string;
