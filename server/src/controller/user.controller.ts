@@ -1,5 +1,4 @@
 import logger from '../utils/logger';
-import { omit } from 'lodash';
 import { createUser } from '../service/user.service';
 
 import { Request, Response } from 'express';
@@ -16,4 +15,8 @@ export async function createUserHandler(
     logger.error(error);
     return res.status(409).send(error.message);
   }
+}
+
+export async function getCurrentUser(req: Request, res: Response) {
+  return res.send(res.locals.user);
 }
